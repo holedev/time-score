@@ -1,8 +1,7 @@
 "use client";
 
 import type { User } from "@supabase/supabase-js";
-import { redirect } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -11,14 +10,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { useRouter } from "@/configs/i18n/routing";
 import { createClient } from "@/configs/supabase/client";
-import { _ROUTE_AUTH, _ROUTE_PROFILE } from "@/constants/route";
+import { _ROUTE_AUTH, _ROUTE_DASHBOARD, _ROUTE_PROFILE } from "@/constants/route";
 import { Button } from "../../ui/button";
 import { Skeleton } from "../../ui/skeleton";
 
 const UserProfile = () => {
-  const t = useTranslations("common.nav");
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -57,13 +54,14 @@ const UserProfile = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>
-        <DropdownMenuItem onClick={() => router.push(_ROUTE_PROFILE)}>{t("profile")}</DropdownMenuItem>
-        <DropdownMenuItem onClick={handleLogout}>{t("logout")}</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push(_ROUTE_DASHBOARD)}>Dashboard</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push(_ROUTE_PROFILE)}>Profile</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
     <Button onClick={() => redirect(_ROUTE_AUTH)} variant='outline'>
-      {t("login")}
+      Login
     </Button>
   );
 };

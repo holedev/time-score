@@ -1,10 +1,7 @@
 import "@/app/globals.css";
 import { Roboto } from "next/font/google";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import type { locale } from "@/types/global";
 import { ThemeProvider } from "../theme-provider";
 import { Toaster } from "../ui/toaster";
 import { TooltipProvider } from "../ui/tooltip";
@@ -15,18 +12,14 @@ const roboto = Roboto({
   style: ["italic", "normal"]
 });
 
-type BaseLayoutType = { children: ReactNode; locale: locale };
+type BaseLayoutType = { children: ReactNode };
 
-export async function BaseLayout({ children, locale }: BaseLayoutType) {
-  const messages = await getMessages();
-
+export function BaseLayout({ children }: BaseLayoutType) {
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang='en' suppressHydrationWarning>
       <body className={cn(roboto.className, "flex h-screen w-screen flex-col")}>
         <ThemeProvider attribute='class' defaultTheme='system' disableTransitionOnChange enableSystem>
-          <TooltipProvider>
-            <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
-          </TooltipProvider>
+          <TooltipProvider>{children}</TooltipProvider>
           <Toaster />
         </ThemeProvider>
       </body>

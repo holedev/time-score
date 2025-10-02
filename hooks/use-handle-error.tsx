@@ -1,4 +1,3 @@
-import { useTranslations } from "next-intl";
 import type { ResponseType, SuccessResponseType } from "@/types/response";
 import { useToast } from "./use-toast";
 
@@ -10,7 +9,6 @@ type HandleErrorType = {
 
 const useHandleError = () => {
   const { toast } = useToast();
-  const t = useTranslations("common.notify");
 
   const handleErrorClient = async ({
     cb,
@@ -19,12 +17,17 @@ const useHandleError = () => {
     },
     withSuccessNotify = true
   }: HandleErrorType) => {
+    const loadingToast = toast({
+      title: "Đang suy luận ...",
+      description: "Hệ thống đang nỗ lực tính toán ..."
+    });
+
     try {
       const { error, data } = await cb();
 
       if (error) {
         toast({
-          title: t("error.title"),
+          title: "Lỗi",
           description: error.message,
           variant: "destructive"
         });
@@ -33,8 +36,8 @@ const useHandleError = () => {
 
       if (withSuccessNotify) {
         toast({
-          title: t("success.title"),
-          description: t("success.message")
+          title: "Thành công",
+          description: "Thao tác thành công"
         });
       }
 
@@ -42,12 +45,14 @@ const useHandleError = () => {
     } catch (error) {
       if (error instanceof Error) {
         toast({
-          title: t("error.unknownError"),
+          title: "Lỗi không xác định",
           description: error.message,
           variant: "destructive"
         });
         return;
       }
+    } finally {
+      loadingToast.dismiss();
     }
   };
 

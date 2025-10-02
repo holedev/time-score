@@ -1,6 +1,5 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +9,6 @@ import { updateNickname } from "./actions";
 type FormClientType = { nickname: string };
 
 const FormClient = ({ nickname }: FormClientType) => {
-  const t = useTranslations("profile.form");
   const { handleErrorClient } = useHandleError();
   const [value, setValue] = useState<string>(nickname);
 
@@ -33,10 +31,10 @@ const FormClient = ({ nickname }: FormClientType) => {
         className='text-center'
         name='nickname'
         onChange={(e) => setValue(e.target.value)}
-        placeholder={t("placeholer")}
+        placeholder='Enter your nickname'
         value={value}
       />
-      <Button type='submit'>{t("submit")}</Button>
+      <Button type='submit'>Submit</Button>
     </form>
   );
 };

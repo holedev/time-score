@@ -1,9 +1,12 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
-import { _LOCALES } from "@/constants/lang";
 import { _ROUTE_AUTH, _ROUTE_PRIVATES } from "@/constants/route";
 
-export async function updateSession(request: NextRequest, response: NextResponse) {
+export async function updateSession(request: NextRequest) {
+  let supabaseResponse = NextResponse.next({
+    request
+  });
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
@@ -17,7 +20,7 @@ export async function updateSession(request: NextRequest, response: NextResponse
             request.cookies.set(name, value);
           }
           for (const { name, value, options } of cookiesToSet) {
-            response.cookies.set(name, value, options);
+            supabaseResponse.cookies.set(name, value, options);
           }
         }
       }
@@ -28,8 +31,8 @@ export async function updateSession(request: NextRequest, response: NextResponse
     data: { user }
   } = await supabase.auth.getUser();
 
-  const privateGroup: string[] = _LOCALES.flatMap((locale) => _ROUTE_PRIVATES.map((route) => `/${locale}${route}`));
-  const authGroup: string[] = _LOCALES.map((locale) => `/${locale}${_ROUTE_AUTH}`);
+  const privateGroup: string[] = _ROUTE_PRIVATES;
+  const authGroup: string[] = [_ROUTE_AUTH];
 
   if (!user && privateGroup.includes(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone();
@@ -43,5 +46,5 @@ export async function updateSession(request: NextRequest, response: NextResponse
     return NextResponse.redirect(url);
   }
 
-  return response;
+  return supabaseResponse;
 }

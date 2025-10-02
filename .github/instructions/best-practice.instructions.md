@@ -19,7 +19,6 @@ applyTo: **/*.tsx, **/*.ts, src/**/*.ts, src/**/*.tsx
 
 - When create a new api route, remember create swagger api document
 - When create new UI component, priority to use shadcn@latest before create new component
-- When create new page, priority to use i18n with two languages: English and Vietnamese
 
 ## Development Environment
 
@@ -90,15 +89,6 @@ applyTo: **/*.tsx, **/*.ts, src/**/*.ts, src/**/*.tsx
   - Always return ResponseType with proper error or success structure
 - Use toast notifications for user feedback
 - Implement proper error boundaries in components
-
-## Internationalization (i18n)
-
-- Use next-intl for translations
-- Place translation files in configs/messages/
-- Support multiple locales (en, vi)
-- Use dynamic route groups for localization ([locale])
-- Use useTranslations hook for client-side translations
-- Place all text in translation files, no hardcoded strings
 
 ## Authentication (Supabase)
 

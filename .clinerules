@@ -1,90 +1,44 @@
 ---
 description: Next.js with TypeScript and Shadcn UI best practices
-globs: **/*.tsx, **/*.ts, src/**/*.ts, src/**/*.tsx
+applyTo: **/*.tsx, **/*.ts, src/**/*.ts, src/**/*.tsx
 ---
 
 # Next.js Best Practices
 
-## Sensitive Files
-
-DO NOT read or modify:
-
-- .env files
-- \*_/config/secrets._
-- \*_/_.pem
-- Any file containing API keys, tokens, or credentials
-
-## Security Practices
-
-- Never commit sensitive files
-- Use environment variables for secrets
-- Keep credentials out of logs and output
-
 ## Git Repository Manager
 
-- Use conventional commit, add footer for every commit "Signed-off-by: RooCode"
-- Remember **DONT** write in 'main' branch, write code in 'dev' branch or create new branch if need
+- Use conventional commit
 - Use rebase for merge branch
 
 ## Manager Package
 
 - Use pnpm instead of npm
-- shadcn-ui is old name of lib, use shadcn instead of
+- Use shadcn instead of shadcn-ui as it is the old name of the library.
 
 ## Workflow
 
 - When create a new api route, remember create swagger api document
 - When create new UI component, priority to use shadcn@latest before create new component
-- When create new page, priority to use i18n with two languages: English and Vietnamese
 
 ## Development Environment
 
-- Node.js version >= 20
+- Node.js version 22
 - PNPM version >= 9
 - Use Turbopack in development (`next dev --turbopack`)
-- Use Biome for linting and formatting:
-  - Run `pnpm format:fix` to format code
-  - Run `pnpm lint:fix` to fix linting issues
-  - Run `pnpm check:fix` to check and fix all issues
+- Use Biome for linting and formatting
 - Commits are checked with Biome via lint-staged
 - Files are automatically formatted before commits
 - Prisma schema location: ./configs/prisma/schema.prisma
 - Remember **DONT** write in 'main' branch, write code in 'dev' branch or create new branch if need
-- Use rebase for merge branch
-
-## Manager Package
-
-- Use pnpm instead of npm
-- shadcn-ui is old name of lib, use shadcn instead of
-
-## Workflow
-
-- When create a new api route, remember create swagger api document
-- When create new UI component, priority to use shadcn@latest before create new component
-- When create new page, priority to use i18n with two languages: English and Vietnamese
-
-## Development Environment
-
-- Node.js version >= 20
-- PNPM version >= 9
-- Use Turbopack in development (`next dev --turbopack`)
-- Use Biome for linting and formatting:
-  - Run `pnpm format:fix` to format code
-  - Run `pnpm lint:fix` to fix linting issues
-  - Run `pnpm check:fix` to check and fix all issues
-- Commits are checked with Biome via lint-staged
-- Files are automatically formatted before commits
-- Prisma schema location: ./configs/prisma/schema.prisma
-- Postinstall runs `prisma generate`
 
 ## Code Style & Formatting
 
 - Follow Biome's default code style
 - Use consistent formatting across all files
 - Run Biome checks before committing:
-  - `pnpm format` to check formatting
-  - `pnpm lint` to check linting
-  - `pnpm check` to perform all checks
+  - `pnpm lint:check` to check with biome
+  - `pnpm lint:fix` to fix linting issues
+  - `pnpm lint:unsafe` for unsafe fixes
 - Fix any Biome warnings or errors before committing
 
 ## Project Structure
@@ -94,11 +48,7 @@ DO NOT read or modify:
 - Place shared components in `components` directory
 - Place utilities and helpers in `utils` directory, the `lib` directory is reserved for third-party libraries
 - Use lowercase with dashes for directories (e.g., `components/auth-wizard`)
-- Place configuration files in `configs` directory:
-  - i18n: Internationalization configuration
-  - messages: Translation messages
-  - prisma: Database configuration
-  - supabase: Authentication configuration
+- Place configuration files in `configs` directory
 
 ## Components
 
@@ -112,29 +62,13 @@ DO NOT read or modify:
 - Wrap client components in Suspense with fallback
 - Use dynamic loading for non-critical components
 - Implement proper error boundaries
-- Place static content and interfaces at file end
-
-## Performance
-
-- Optimize images: Use WebP format, size data, lazy loading
-- Minimize use of 'useEffect' and 'setState'
-- Favor Server Components (RSC) where possible
-- Use dynamic loading for non-critical components
-- Implement proper caching strategies
 
 ## Data Fetching
 
-- Use Server Components for data fetching when possible
+- Use Server Components for data fetching when possible, it should be place in dynamic.tsx file
 - Implement proper error handling for data fetching
 - Use appropriate caching strategies
 - Handle loading and error states appropriately
-
-## Routing
-
-- Use the App Router conventions
-- Implement proper loading and error states for routes
-- Use dynamic routes appropriately
-- Handle parallel routes when needed
 
 ## Forms and Validation
 
@@ -153,18 +87,8 @@ DO NOT read or modify:
   - Use handleErrorServerNoAuth for public routes
   - Use handleErrorServerWithAuth for protected routes
   - Always return ResponseType with proper error or success structure
-- Log errors with proper context (file:line) in console.error
 - Use toast notifications for user feedback
 - Implement proper error boundaries in components
-
-## Internationalization (i18n)
-
-- Use next-intl for translations
-- Place translation files in configs/messages/
-- Support multiple locales (en, vi)
-- Use dynamic route groups for localization ([locale])
-- Use useTranslations hook for client-side translations
-- Place all text in translation files, no hardcoded strings
 
 ## Authentication (Supabase)
 
@@ -172,7 +96,6 @@ DO NOT read or modify:
 - Implement proper session handling in middleware
 - Use auth callback routes for authentication flow
 - Protected routes should use handleErrorServerWithAuth
-- Always handle unauthorized states appropriately
 
 ## State Management
 

@@ -6,7 +6,7 @@ function ApiDoc() {
   return (
     <div className='container mx-auto p-4'>
       <Link className='mb-4 font-bold text-2xl' href='/'>
-        NextJS Faster
+        MPC Time Score
       </Link>
       <div className='swagger-ui-wrapper rounded-lg bg-white shadow-sm'>
         <SwaggerUi url='/api/docs' />

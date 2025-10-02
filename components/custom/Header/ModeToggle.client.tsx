@@ -1,7 +1,6 @@
 "use client";
 
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
-import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +11,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const ModeToggle = () => {
-  const t = useTranslations("common.theme");
   const { setTheme } = useTheme();
 
   return (
@@ -25,9 +23,9 @@ const ModeToggle = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>
-        <DropdownMenuItem onClick={() => setTheme("light")}>{t("light")}</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>{t("dark")}</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>{t("system")}</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

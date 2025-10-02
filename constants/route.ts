@@ -1,4 +1,5 @@
 export const _ROUTE_PROFILE: string = "/profile";
+export const _ROUTE_DASHBOARD: string = "/dashboard";
 export const _ROUTE_AUTH: string = "/auth";
 export const _ROUTE_AUTH_CALLBACK: string = "/api/auth/callback";
 
