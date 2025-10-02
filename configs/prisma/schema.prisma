@@ -29,8 +29,21 @@ model Event {
   timeStart   DateTime
   timeEnd     DateTime
 
-  reviewers User[]
-  teams     Team[]
+  teams         Team[]
+  EventReviewer EventReviewer[]
+}
+
+model EventReviewer {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  eventId   Int
+  userId    String   @db.Uuid // liên kết tới auth.users.id
+  isLeader  Boolean  @default(false)
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId]) // một user không thể review 2 lần cùng event
 }
 
 model Team {
@@ -47,11 +60,6 @@ model Team {
   eventId     Int?
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String
-  Event     Event?   @relation(fields: [eventId], references: [id])
-  eventId   Int?
-}
+// tiêu chí
+// phiếu chấm điểm
+// log
