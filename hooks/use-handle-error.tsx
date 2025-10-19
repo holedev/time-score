@@ -1,3 +1,5 @@
+"use client";
+
 import type { ResponseType, SuccessResponseType } from "@/types/response";
 import { useToast } from "./use-toast";
 

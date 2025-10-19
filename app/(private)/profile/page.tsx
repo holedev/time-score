@@ -1,6 +1,6 @@
-import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { Suspense } from "react";
 import { LoadingComponent } from "@/components/custom/Loading";
+import { UserWithRole } from "@/types/global";
 import { getProfile } from "./actions";
 import { Profile } from "./dynamic";
 import { FormClient } from "./form.client";
@@ -13,15 +13,15 @@ export default async function Page() {
   if (error) {
     throw new Error(error.message);
   }
-  const user = data?.payload as SupabaseUser;
+  const dataUser = data?.payload as { user: UserWithRole };
 
   return (
     <section className='flex w-[400px] flex-col space-y-2'>
       <Suspense fallback={<LoadingComponent />}>
-        <FormClient nickname={user?.email || ""} />
+        <FormClient nickname={dataUser.user?.user_metadata?.display_name || ""} />
       </Suspense>
       <Suspense fallback={<LoadingComponent />}>
-        <Profile user={user} />
+        <Profile user={dataUser.user} />
       </Suspense>
     </section>
   );

@@ -4,13 +4,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useHandleError } from "@/hooks/use-handle-error";
-import { updateNickname } from "./actions";
+import { updateDisplayName } from "./actions";
 
 type FormClientType = { nickname: string };
 
 const FormClient = ({ nickname }: FormClientType) => {
   const { handleErrorClient } = useHandleError();
   const [value, setValue] = useState<string>(nickname);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,10 +19,11 @@ const FormClient = ({ nickname }: FormClientType) => {
     if (!value) {
       return;
     }
-
+    setLoading(true);
     await handleErrorClient({
-      cb: async () => updateNickname(value),
-      withSuccessNotify: true
+      cb: async () => updateDisplayName(value),
+      withSuccessNotify: true,
+      onSuccess: () => setLoading(false)
     });
   };
 
@@ -29,12 +31,14 @@ const FormClient = ({ nickname }: FormClientType) => {
     <form className='flex items-center space-x-2' onSubmit={handleSubmit}>
       <Input
         className='text-center'
-        name='nickname'
+        name='displayName'
         onChange={(e) => setValue(e.target.value)}
-        placeholder='Enter your nickname'
+        placeholder='Tên hiển thị'
         value={value}
       />
-      <Button type='submit'>Submit</Button>
+      <Button disabled={loading} type='submit'>
+        Cập nhật
+      </Button>
     </form>
   );
 };

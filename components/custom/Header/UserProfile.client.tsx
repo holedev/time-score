@@ -49,7 +49,7 @@ const UserProfile = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className='cursor-pointer'>
-          <AvatarImage src={user.user_metadata.avatar_url} />
+          <AvatarImage src={user.user_metadata.avatar_url || "/default-avt.jpg"} />
           <AvatarFallback>{user.user_metadata.full_name}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>

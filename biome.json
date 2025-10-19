@@ -13,7 +13,9 @@
       "**/*.js",
       "**/*.jsx",
       "!**/components/ui",
-      "!**/*.d.ts"
+      "!**/components/*.tsx",
+      "!**/*.d.ts",
+      "!**/configs/prisma/zod/*.ts"
     ]
   },
   "assist": {
@@ -48,11 +50,12 @@
       "recommended": true,
       "style": {
         "useConst": "off",
-        "useImportType": "off"
+        "useImportType": "off",
+        "useFilenamingConvention": "off"
       },
       "correctness": {
         "noUnusedVariables": "off",
-        "noUnusedImports": "off"
+        "noUnusedImports": "error"
       },
       "nursery": { "noShadow": "off" }
     }

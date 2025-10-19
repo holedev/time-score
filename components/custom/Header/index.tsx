@@ -3,7 +3,7 @@ import { ModeToggle } from "./ModeToggle.client";
 import { UserProfile } from "./UserProfile.client";
 
 const Header = () => (
-  <header className='border-b-2 shadow-md'>
+  <header className='z-20 border-b-2 shadow-md'>
     <div className='container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-4 md:flex-row'>
       <div className='flex items-center font-bold text-xl uppercase'>
         <Link href='/' prefetch={true}>
