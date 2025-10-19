@@ -1,5 +1,6 @@
 "use client";
 
+import { ToastProps } from "@/components/ui/toast";
 import type { ResponseType, SuccessResponseType } from "@/types/response";
 import { useToast } from "./use-toast";
 
@@ -19,10 +20,13 @@ const useHandleError = () => {
     },
     withSuccessNotify = true
   }: HandleErrorType) => {
-    const loadingToast = toast({
-      title: "Đang suy luận ...",
-      description: "Hệ thống đang nỗ lực tính toán ..."
-    });
+    let loadingToast: (ToastProps & { dismiss: () => void }) | null = null;
+    if (withSuccessNotify) {
+      loadingToast = toast({
+        title: "Đang suy luận ...",
+        description: "Hệ thống đang nỗ lực tính toán ..."
+      });
+    }
 
     try {
       const { error, data } = await cb();
@@ -54,7 +58,9 @@ const useHandleError = () => {
         return;
       }
     } finally {
-      loadingToast.dismiss();
+      if (loadingToast) {
+        loadingToast.dismiss();
+      }
     }
   };
 

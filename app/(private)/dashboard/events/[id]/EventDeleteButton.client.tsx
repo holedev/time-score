@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useHandleError } from "@/hooks/use-handle-error";
-import { deleteEvent } from "../actions";
+import { deleteEvent } from "./actions";
 
 type EventDeleteButtonProps = {
   eventId: number;

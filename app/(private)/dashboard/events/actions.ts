@@ -2,9 +2,8 @@
 
 import { revalidateTag, unstable_cache } from "next/cache";
 import { prisma } from "@/configs/prisma/db";
+import { _CACHE_TAG_EVENTS } from "@/constants/cache-tag";
 import { handleAuthorizeRoleAdmin, handleErrorServerWithAuth } from "@/utils/handle-error-server";
-
-const _CACHE_TAG_EVENTS = "events";
 
 const getEvents = async () =>
   handleErrorServerWithAuth({

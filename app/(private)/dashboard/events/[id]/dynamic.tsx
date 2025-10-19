@@ -13,10 +13,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CompleteEvent } from "@/configs/prisma/zod";
 import { handleDatetime } from "@/utils/handle-datetime";
-import { EventDeleteButton } from "./_components/EventDeleteButton.client";
-import { EventManagementTabs } from "./_components/EventManagementTabs.client";
-import { EventUpdateForm } from "./_components/EventUpdateForm.client";
 import { getEventDetail } from "./actions";
+import { EventDeleteButton } from "./EventDeleteButton.client";
+import { EventManagementTabs } from "./EventManagementTabs.client";
+import { EventUpdateForm } from "./EventUpdateForm.client";
 
 type EventDetailDynamicProps = {
   eventId: number;

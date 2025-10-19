@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sheet";
 import { CompleteEvent } from "@/configs/prisma/zod";
 import { useHandleError } from "@/hooks/use-handle-error";
-import { updateEvent } from "../actions";
+import { updateEvent } from "./actions";
 
 const DATETIME_SLICE_LENGTH = 16;
 

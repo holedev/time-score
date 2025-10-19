@@ -4,9 +4,9 @@ import { ClipboardListIcon, UserCheckIcon, UsersIcon } from "lucide-react";
 import z from "zod";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RelatedEventModel } from "@/configs/prisma/zod";
-import { CriteriaTab } from "./CriteriaTab.client";
-import { ReviewerTab } from "./ReviewerTab.client";
-import { TeamTabClient } from "./TeamTab.client";
+import { CriteriaTabClient } from "./criteria/CriteriaTab.client";
+import { ReviewerTabClient } from "./reviewer/ReviewerTab.client";
+import { TeamTabClient } from "./team/TeamTab.client";
 
 type EventManagementTabsProps = {
   event: z.infer<typeof RelatedEventModel>;
@@ -40,11 +40,11 @@ function EventManagementTabs({ event }: EventManagementTabsProps) {
         </TabsContent>
 
         <TabsContent className='space-y-4' value='criteria'>
-          <CriteriaTab event={event} />
+          <CriteriaTabClient event={event} />
         </TabsContent>
 
         <TabsContent className='space-y-4' value='reviewers'>
-          <ReviewerTab event={event} />
+          <ReviewerTabClient event={event} />
         </TabsContent>
       </Tabs>
     </div>

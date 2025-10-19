@@ -51,7 +51,8 @@
       "style": {
         "useConst": "off",
         "useImportType": "off",
-        "useFilenamingConvention": "off"
+        "useFilenamingConvention": "off",
+        "useNamingConvention": "off"
       },
       "correctness": {
         "noUnusedVariables": "off",

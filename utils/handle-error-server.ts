@@ -10,7 +10,6 @@ import { ErrorResponse, SuccessResponse } from "./response";
 const _MILLISECONDS_IN_SECOND = 1000;
 
 export type DecodedTokenType = RequiredClaims & {
-  // biome-ignore lint/style/useNamingConvention: <key of supabase>
   user_role: UserRole;
 };
 

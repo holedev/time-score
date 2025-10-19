@@ -13,7 +13,6 @@ const updateDisplayName = async (displayName: string) =>
     cb: async ({ user: _ }) => {
       const supabase = await createClientSsr();
       const { error, data } = await supabase.auth.updateUser({
-        // biome-ignore lint/style/useNamingConvention: <key of supabase>
         data: { display_name: displayName }
       });
 

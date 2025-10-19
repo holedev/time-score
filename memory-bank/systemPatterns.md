@@ -304,3 +304,35 @@ Prisma ←→ Database Operations
    - Production optimizations
 
 These patterns form the foundation of the system architecture and should be followed for consistency and maintainability.
+
+[2025-01-19 20:54:31] - **Debounced API Pattern Implementation**
+- Implemented debounced API calls pattern in TeamTab component for order updates
+- Used `useCallback` and `useRef` with `setTimeout` for 1-second debounce delay
+- Pattern prevents excessive API calls during rapid user interactions (up/down button clicks)
+- Provides immediate UI feedback with eventual database synchronization
+- Clearable timeout ensures only the latest state change triggers the API call
+
+[2025-01-19 20:54:31] - **Batch Database Update Pattern**
+- Created `updateTeamOrders` server action for batch updating multiple team orders
+- Uses Prisma `$transaction` to ensure atomic operations
+- Accepts array of `{id: number, order: number}` objects for efficient bulk updates
+- Pattern reduces database round trips and ensures data consistency
+
+[2025-01-19 20:54:31] - **Dialog Component Pattern Enhancement**
+- Enhanced reusable dialog pattern to accept external data (existingTeams)
+- Supports both create and update modes within single component
+- Auto-generates order based on existing data for new items
+- Pattern promotes component reusability while maintaining context awareness
+[2025-10-19 23:18:19] - **Modular Feature Directory Pattern**
+- Established consistent pattern for feature organization within event management
+- Structure: `app/(private)/dashboard/events/[id]/{feature}/` with actions.ts + components
+- Applied to team/ and criteria/ directories for better maintainability
+- Pattern promotes separation of concerns and easier feature development
+- Each feature directory contains: actions.ts (server actions), Dialog.client.tsx (dialogs), Tab.client.tsx (main component)
+
+[2025-10-19 23:18:19] - **Optimistic UI Update Pattern for Real-time Feedback**
+- Replaced problematic useEffect synchronization with optimistic UI updates
+- Pattern: Use handleSuccessAction callback with immediate state updates instead of waiting for server revalidation
+- Eliminates blank UI delays by updating local state immediately upon operation success
+- Server actions still handle cache revalidation for consistency across sessions
+- Results in smooth user experience with instant feedback
