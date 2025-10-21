@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Provider } from "@supabase/supabase-js";
+import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,9 +11,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/configs/supabase/client";
+import { _CLIENT_KEY_USER_ROLE } from "@/constants";
 import { _ROUTE_AUTH_CALLBACK } from "@/constants/route";
 import { useHandleError } from "@/hooks/use-handle-error";
 import type { ResponseType } from "@/types/response";
+import { DecodedTokenType } from "@/utils/handle-error-server";
 
 const _minPasswordLength = 6;
 
@@ -53,8 +56,14 @@ const AuthClient = () => {
         });
         return { data, error } as ResponseType;
       },
-      onSuccess: () => {
-        router.push("/");
+      onSuccess: ({ data }) => {
+        const accessToken = data?.session?.access_token;
+        if (accessToken) {
+          const decodedToken = jwtDecode<DecodedTokenType>(accessToken);
+          localStorage.setItem(_CLIENT_KEY_USER_ROLE, decodedToken.user_role);
+        }
+        // TODO: SPA
+        window.location.reload();
       },
       withSuccessNotify: false
     });
@@ -158,7 +167,7 @@ const AuthClient = () => {
         </Form>
         <hr className='my-4' />
         <Button className='w-full max-w-sm' onClick={() => handleLoginWithProvider("google")} variant='outline'>
-          Đăng nhập với Google
+          Đăng nhập với Google (comming soon)
         </Button>
       </CardContent>
     </Card>

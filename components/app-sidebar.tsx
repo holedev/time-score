@@ -5,6 +5,7 @@ import {
   BarChartIcon,
   CameraIcon,
   ClipboardListIcon,
+  ClockIcon,
   DatabaseIcon,
   FileCodeIcon,
   FileIcon,
@@ -18,7 +19,7 @@ import {
   UsersIcon
 } from "lucide-react";
 import * as React from "react";
-import { NavMain } from "@/components/nav-main";
+import { NavItemType, NavMain } from "@/components/nav-main";
 import {
   Sidebar,
   SidebarContent,
@@ -29,17 +30,32 @@ const data = {
     {
       title: "Sự kiện",
       url: "/dashboard/events",
+      role: ["admin"],
       icon: LayoutDashboardIcon
     },
     {
       title: "Người dùng",
       url: "/dashboard/users",
+      role: ["admin"],
       icon: ListIcon
-    }
-  ]
+    },
+    {
+      title: "Thuyết trình",
+      url: "/dashboard/presentations",
+      role: ["admin"],
+      icon: ClockIcon
+    },
+    {
+      title: "Đánh giá",
+      url: "/dashboard/reviews",
+      role: ["reviewer"],
+      icon: ClipboardListIcon
+    },
+  ] as NavItemType[]
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
   return (
     <Sidebar className='z-10' collapsible='offcanvas' {...props}>
       <SidebarContent>

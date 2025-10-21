@@ -1,4 +1,5 @@
 import * as z from "zod"
+import { PresentationStatus } from "@prisma/client"
 import { CompleteEvent, RelatedEventModel, Completeusers, RelatedusersModel } from "./index"
 
 // Helper schema for JSON fields
@@ -16,6 +17,7 @@ export const EventReviewerModel = z.object({
   reviewerId: z.string(),
   isLeader: z.boolean(),
   scores: jsonSchema,
+  presentationStatus: z.nativeEnum(PresentationStatus).nullish(),
 })
 
 export interface CompleteEventReviewer extends z.infer<typeof EventReviewerModel> {

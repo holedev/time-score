@@ -56,31 +56,6 @@ function TableCellViewerClient({ item }: TableCellViewerClientProps) {
               <p className='text-foreground'>{new Date(item.timeEnd).toLocaleString("vi-VN")}</p>
             </div>
           </div>
-
-          <div className='mt-6 space-y-4'>
-            <div className='flex items-center justify-between rounded-lg border p-3'>
-              <div>
-                <Label className='font-medium'>Danh sách đội tham gia</Label>
-                <p className='text-muted-foreground text-sm'>{item.teams?.length || 0} đội</p>
-              </div>
-            </div>
-
-            <div className='flex items-center justify-between rounded-lg border p-3'>
-              <div>
-                <Label className='font-medium'>Tiêu chí cuộc thi</Label>
-                <p className='text-muted-foreground text-sm'>
-                  {item.criteriaTemplateId ? "Đã thiết lập" : "Chưa thiết lập"}
-                </p>
-              </div>
-            </div>
-
-            <div className='flex items-center justify-between rounded-lg border p-3'>
-              <div>
-                <Label className='font-medium'>Giám khảo</Label>
-                <p className='text-muted-foreground text-sm'>{item.eventReviewers?.length || 0} người</p>
-              </div>
-            </div>
-          </div>
         </div>
         <SheetFooter className='mt-auto flex gap-2 sm:flex-col sm:space-x-0'>
           <Link className='w-full' href={`/dashboard/events/${item.id}`}>

@@ -1,5 +1,6 @@
 import * as z from "zod"
-import { CompleteCriteriaTemplate, RelatedCriteriaTemplateModel, CompleteTeam, RelatedTeamModel, CompleteEventReviewer, RelatedEventReviewerModel } from "./index"
+import { PresentationStatus } from "@prisma/client"
+import { CompleteCriteriaTemplate, RelatedCriteriaTemplateModel, CompleteEventReviewer, RelatedEventReviewerModel, CompleteTeam, RelatedTeamModel } from "./index"
 
 export const EventModel = z.object({
   id: z.number().int(),
@@ -11,12 +12,14 @@ export const EventModel = z.object({
   duration: z.number().int(),
   timeStart: z.date(),
   timeEnd: z.date(),
+  presentationStatus: z.nativeEnum(PresentationStatus),
+  canEditScore: z.boolean().nullish(),
 })
 
 export interface CompleteEvent extends z.infer<typeof EventModel> {
   criteriaTemplateId?: CompleteCriteriaTemplate | null
-  teams: CompleteTeam[]
   eventReviewers: CompleteEventReviewer[]
+  teams: CompleteTeam[]
 }
 
 /**
@@ -26,6 +29,6 @@ export interface CompleteEvent extends z.infer<typeof EventModel> {
  */
 export const RelatedEventModel: z.ZodSchema<CompleteEvent> = z.lazy(() => EventModel.extend({
   criteriaTemplateId: RelatedCriteriaTemplateModel.nullish(),
-  teams: RelatedTeamModel.array(),
   eventReviewers: RelatedEventReviewerModel.array(),
+  teams: RelatedTeamModel.array(),
 }))

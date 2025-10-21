@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { createClient } from "@/configs/supabase/client";
+import { _CLIENT_KEY_USER_ROLE } from "@/constants";
 import { _ROUTE_AUTH, _ROUTE_DASHBOARD, _ROUTE_PROFILE } from "@/constants/route";
 import { Button } from "../../ui/button";
 import { Skeleton } from "../../ui/skeleton";
@@ -21,6 +22,7 @@ const UserProfile = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const handleLogout = async () => {
+    localStorage.removeItem(_CLIENT_KEY_USER_ROLE);
     const supabase = createClient();
     await supabase.auth.signOut();
     setUser(null);
@@ -54,9 +56,9 @@ const UserProfile = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>
-        <DropdownMenuItem onClick={() => router.push(_ROUTE_DASHBOARD)}>Dashboard</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => router.push(_ROUTE_PROFILE)}>Profile</DropdownMenuItem>
-        <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push(_ROUTE_DASHBOARD)}>Trang quản trị</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push(_ROUTE_PROFILE)}>Hồ sơ</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogout}>Đăng xuất</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (

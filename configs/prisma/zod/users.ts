@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { Completeidentities, RelatedidentitiesModel, Completemfa_factors, Relatedmfa_factorsModel, Completeone_time_tokens, Relatedone_time_tokensModel, Completesessions, RelatedsessionsModel, Completeuser_roles, Relateduser_rolesModel, CompleteEventReviewer, RelatedEventReviewerModel } from "./index"
+import { Completeidentities, RelatedidentitiesModel, Completemfa_factors, Relatedmfa_factorsModel, Completeoauth_authorizations, Relatedoauth_authorizationsModel, Completeoauth_consents, Relatedoauth_consentsModel, Completeone_time_tokens, Relatedone_time_tokensModel, Completesessions, RelatedsessionsModel, Completeuser_roles, Relateduser_rolesModel, CompleteEventReviewer, RelatedEventReviewerModel } from "./index"
 
 // Helper schema for JSON fields
 type Literal = boolean | number | string
@@ -48,6 +48,8 @@ export const usersModel = z.object({
 export interface Completeusers extends z.infer<typeof usersModel> {
   identities: Completeidentities[]
   mfa_factors: Completemfa_factors[]
+  oauth_authorizations: Completeoauth_authorizations[]
+  oauth_consents: Completeoauth_consents[]
   one_time_tokens: Completeone_time_tokens[]
   sessions: Completesessions[]
   user_roles?: Completeuser_roles | null
@@ -62,6 +64,8 @@ export interface Completeusers extends z.infer<typeof usersModel> {
 export const RelatedusersModel: z.ZodSchema<Completeusers> = z.lazy(() => usersModel.extend({
   identities: RelatedidentitiesModel.array(),
   mfa_factors: Relatedmfa_factorsModel.array(),
+  oauth_authorizations: Relatedoauth_authorizationsModel.array(),
+  oauth_consents: Relatedoauth_consentsModel.array(),
   one_time_tokens: Relatedone_time_tokensModel.array(),
   sessions: RelatedsessionsModel.array(),
   user_roles: Relateduser_rolesModel.nullish(),

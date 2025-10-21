@@ -1,6 +1,6 @@
 import * as z from "zod"
 import { aal_level } from "@prisma/client"
-import { Completemfa_amr_claims, Relatedmfa_amr_claimsModel, Completerefresh_tokens, Relatedrefresh_tokensModel, Completeusers, RelatedusersModel } from "./index"
+import { Completemfa_amr_claims, Relatedmfa_amr_claimsModel, Completerefresh_tokens, Relatedrefresh_tokensModel, Completeoauth_clients, Relatedoauth_clientsModel, Completeusers, RelatedusersModel } from "./index"
 
 export const sessionsModel = z.object({
   id: z.string(),
@@ -14,11 +14,13 @@ export const sessionsModel = z.object({
   user_agent: z.string().nullish(),
   ip: z.string().nullish(),
   tag: z.string().nullish(),
+  oauth_client_id: z.string().nullish(),
 })
 
 export interface Completesessions extends z.infer<typeof sessionsModel> {
   mfa_amr_claims: Completemfa_amr_claims[]
   refresh_tokens: Completerefresh_tokens[]
+  oauth_clients?: Completeoauth_clients | null
   users: Completeusers
 }
 
@@ -30,5 +32,6 @@ export interface Completesessions extends z.infer<typeof sessionsModel> {
 export const RelatedsessionsModel: z.ZodSchema<Completesessions> = z.lazy(() => sessionsModel.extend({
   mfa_amr_claims: Relatedmfa_amr_claimsModel.array(),
   refresh_tokens: Relatedrefresh_tokensModel.array(),
+  oauth_clients: Relatedoauth_clientsModel.nullish(),
   users: RelatedusersModel,
 }))

@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { CompleteEvent, RelatedEventModel, CompleteCriteriaRecord, RelatedCriteriaRecordModel } from "./index"
+import { CompleteCriteriaRecord, RelatedCriteriaRecordModel, CompleteEvent, RelatedEventModel } from "./index"
 
 export const CriteriaTemplateModel = z.object({
   id: z.number().int(),
@@ -11,8 +11,8 @@ export const CriteriaTemplateModel = z.object({
 })
 
 export interface CompleteCriteriaTemplate extends z.infer<typeof CriteriaTemplateModel> {
-  event: CompleteEvent
   criteriaRecords: CompleteCriteriaRecord[]
+  event: CompleteEvent
 }
 
 /**
@@ -21,6 +21,6 @@ export interface CompleteCriteriaTemplate extends z.infer<typeof CriteriaTemplat
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const RelatedCriteriaTemplateModel: z.ZodSchema<CompleteCriteriaTemplate> = z.lazy(() => CriteriaTemplateModel.extend({
-  event: RelatedEventModel,
   criteriaRecords: RelatedCriteriaRecordModel.array(),
+  event: RelatedEventModel,
 }))

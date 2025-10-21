@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
-import { LoadingComponent } from "@/components/custom/Loading";
-import { Separator } from "@/components/ui/separator";
-import { UserList } from "./dynamic";
+import { HomepageClient } from "./Homepage.client";
 
 export function generateMetadata(): Metadata {
   return {
@@ -13,11 +10,7 @@ export function generateMetadata(): Metadata {
 export default function Page() {
   return (
     <section className='h-full space-y-4 p-4'>
-      <div className='flex flex-wrap items-center justify-center gap-2'>MPC TimeScore</div>
-      <Separator />
-      <Suspense fallback={<LoadingComponent />}>
-        <UserList />
-      </Suspense>
+      <HomepageClient />
     </section>
   );
 }

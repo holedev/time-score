@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
     "*": [".next/export-detail.json"],
     "/api/docs": ["./.next/cache/**/*"]
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**"
+      }
+    ]
+  },
   webpack: (
     config,
     {

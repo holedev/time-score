@@ -11,12 +11,12 @@ const Header = () => (
         </Link>
       </div>
       <div className='flex items-center gap-2'>
-        <Link
+        {/* <Link
           className='mr-0 font-medium text-muted-foreground text-sm transition-colors hover:text-primary'
           href='/api-docs'
         >
           API Docs
-        </Link>
+        </Link> */}
         <ModeToggle />
         <UserProfile />
       </div>

@@ -17,7 +17,7 @@ export const TeamModel = z.object({
 })
 
 export interface CompleteTeam extends z.infer<typeof TeamModel> {
-  Event?: CompleteEvent | null
+  Event: CompleteEvent
 }
 
 /**
@@ -26,5 +26,5 @@ export interface CompleteTeam extends z.infer<typeof TeamModel> {
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const RelatedTeamModel: z.ZodSchema<CompleteTeam> = z.lazy(() => TeamModel.extend({
-  Event: RelatedEventModel.nullish(),
+  Event: RelatedEventModel,
 }))

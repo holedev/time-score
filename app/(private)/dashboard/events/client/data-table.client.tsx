@@ -30,15 +30,13 @@ import {
   VisibilityState
 } from "@tanstack/react-table";
 import {
-  CheckCircle2Icon,
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon,
   ColumnsIcon,
-  GripVerticalIcon,
-  LoaderIcon
+  GripVerticalIcon
 } from "lucide-react";
 import { startTransition, useId, useMemo, useState } from "react";
 import { z } from "zod";
@@ -140,30 +138,6 @@ const columns: ColumnDef<z.infer<typeof RelatedEventModel>>[] = [
       <div className='w-32'>
         <Badge className='px-1.5 text-muted-foreground' variant='outline'>
           {row.original.duration}
-        </Badge>
-      </div>
-    )
-  },
-  {
-    accessorKey: "criteria",
-    header: "Tiêu chí",
-    cell: ({ row }) => (
-      <Badge className='flex gap-1 px-1.5 text-muted-foreground [&_svg]:size-3' variant='outline'>
-        {row.original.criteriaTemplateId ? (
-          <CheckCircle2Icon className='text-green-500 dark:text-green-400' />
-        ) : (
-          <LoaderIcon />
-        )}
-      </Badge>
-    )
-  },
-  {
-    accessorKey: "reviewer",
-    header: "Giám khảo",
-    cell: ({ row }) => (
-      <div className='w-32'>
-        <Badge className='px-1.5 text-muted-foreground' variant='outline'>
-          {row.original.eventReviewers?.length || 0}
         </Badge>
       </div>
     )
