@@ -11,9 +11,11 @@ import {
 } from "@/components/ui/breadcrumb";
 import { TableDynamic } from "./dynamic";
 
+export const dynamic = "force-dynamic";
+
 export default function Page() {
   return (
-    <Suspense fallback={<LoadingComponent />}>
+    <>
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -27,7 +29,9 @@ export default function Page() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <TableDynamic />
-    </Suspense>
+      <Suspense fallback={<LoadingComponent />}>
+        <TableDynamic />
+      </Suspense>
+    </>
   );
 }

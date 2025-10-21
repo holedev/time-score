@@ -14,7 +14,7 @@ import { createClient } from "@/configs/supabase/client";
 import { _CLIENT_KEY_USER_ROLE } from "@/constants";
 import { _ROUTE_AUTH_CALLBACK } from "@/constants/route";
 import { useHandleError } from "@/hooks/use-handle-error";
-import type { ResponseType } from "@/types/response";
+import type { ResponseType, SuccessResponseType } from "@/types/response";
 import { DecodedTokenType } from "@/utils/handle-error-server";
 
 const _minPasswordLength = 6;
@@ -57,7 +57,8 @@ const AuthClient = () => {
         return { data, error } as ResponseType;
       },
       onSuccess: ({ data }) => {
-        const accessToken = data?.session?.access_token;
+        const session = (data as SuccessResponseType & { session: { access_token: string } })?.session;
+        const accessToken = session.access_token;
         if (accessToken) {
           const decodedToken = jwtDecode<DecodedTokenType>(accessToken);
           localStorage.setItem(_CLIENT_KEY_USER_ROLE, decodedToken.user_role);

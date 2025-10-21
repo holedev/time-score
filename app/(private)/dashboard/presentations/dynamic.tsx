@@ -1,3 +1,5 @@
+"use server";
+
 import { CompleteEvent } from "@/configs/prisma/zod";
 import { getEventsForPresentation } from "./actions";
 import { PresentationDataTable } from "./client/data-table.client";

@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import { LoadingComponent } from "@/components/custom/Loading";
 import { ReviewerTableDynamic } from "./dynamic";
 
+export const dynamic = "force-dynamic";
+
 export default function ReviewsPage() {
   return (
     <div className='space-y-6'>

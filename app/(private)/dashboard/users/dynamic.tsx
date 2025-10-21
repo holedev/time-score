@@ -1,3 +1,5 @@
+"use server";
+
 import { UserRole } from "@/types/global";
 import { getUsers } from "./actions";
 import { DataTable } from "./data-table.client";

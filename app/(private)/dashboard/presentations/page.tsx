@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/breadcrumb";
 import { PresentationTableDynamic } from "./dynamic";
 
+export const dynamic = "force-dynamic";
+
 export default function PresentationPage() {
   return (
     <div className='space-y-6'>
