@@ -194,53 +194,53 @@ const ReviewerEventDisplay = ({ event, reviewerData }: ReviewerEventDisplayProps
           <CardContent>
             <div className='flex justify-center'>
               <div className='flex'>
-                <div className='flex items-start gap-6'>
-                  <div className='relative aspect-[16/9] w-[500px] flex-shrink-0 overflow-hidden rounded-lg'>
-                    <Image
-                      alt={`${currentTeam.title} team image`}
-                      className='object-cover'
-                      fill
-                      src={currentTeam.image || "/placeholder-team.jpg"}
-                    />
-                  </div>
-
-                  <div className='flex-1'>
-                    <div className='mb-2 flex items-center gap-3'>
-                      <h3 className='font-bold text-xl'>{currentTeam.title}</h3>
-                      <Badge className='' variant='secondary'>
-                        Đang trình bày
-                      </Badge>
+                <div className='flex flex-col items-start md:gap-3 lg:flex-row lg:gap-6'>
+                  <div className='flex flex-col gap-4 md:flex-row lg:flex-1'>
+                    <div className='relative aspect-[16/9] w-[80vw] flex-shrink-0 overflow-hidden rounded-lg md:w-[500px]'>
+                      <Image
+                        alt={`${currentTeam.title} team image`}
+                        className='object-cover'
+                        fill
+                        src={currentTeam.image || "/placeholder-team.jpg"}
+                      />
                     </div>
-                    <p className='mb-3 text-sm'>{currentTeam.description}</p>
 
-                    <div className='mt-4 mb-2 flex items-center gap-2'>
-                      <UsersIcon className='h-4 w-4' />
-                      <span className='font-medium text-sm'>Thành viên:</span>
-                    </div>
-                    <div className='mt-2 flex flex-wrap gap-2'>
-                      {parseMembers(currentTeam.members).map((member, idx) => (
-                        <div className='flex items-center gap-2' key={`member-${currentTeam.id}-${idx}`}>
-                          <Avatar className='h-6 w-6'>
-                            <AvatarImage alt={member.fullName} src='' />
-                            <AvatarFallback className='text-xs'>
-                              {member.fullName
-                                .split(" ")
-                                .map((name: string) => name[0])
-                                .join("")
-                                .toUpperCase()
-                                .slice(0, 2)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className='text-sm'>
-                            <div className='font-medium'>{member.fullName}</div>
-                            <div className='text-xs opacity-75'>{member.id}</div>
+                    <div className='flex-1 text-center md:mx-auto md:text-left xl:min-w-[250px]'>
+                      <div className='mb-2 flex items-center justify-center gap-3 md:justify-start'>
+                        <h3 className='font-bold text-xl'>{currentTeam.title}</h3>
+                        <Badge variant='secondary'>Đang trình bày</Badge>
+                      </div>
+                      <p className='mb-3 text-sm'>{currentTeam.description}</p>
+
+                      <div className='mt-4 mb-2 flex items-center justify-center gap-2 md:justify-start'>
+                        <UsersIcon className='h-4 w-4' />
+                        <span className='font-medium text-sm'>Thành viên:</span>
+                      </div>
+                      <div className='mt-2 flex flex-wrap justify-center gap-4 md:justify-start'>
+                        {parseMembers(currentTeam.members).map((member, idx) => (
+                          <div className='mt-2 flex items-center gap-3' key={`member-${currentTeam.id}-${idx}`}>
+                            <Avatar className='h-6 w-6'>
+                              <AvatarImage alt={member.fullName} src='' />
+                              <AvatarFallback className='text-xs'>
+                                {member.fullName
+                                  .split(" ")
+                                  .map((name: string) => name[0])
+                                  .join("")
+                                  .toUpperCase()
+                                  .slice(0, 2)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className='text-sm'>
+                              <div className='font-medium'>{member.fullName}</div>
+                              <div className='text-xs opacity-75'>{member.id}</div>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
-                  <Separator className='mx-6 h-auto' orientation='vertical' />
-                  <div className='flex min-w-[200px] flex-col items-center gap-2'>
+                  <Separator className='mx-6 hidden h-auto lg:block' orientation='vertical' />
+                  <div className='mt-5 flex w-full flex-col items-center gap-2'>
                     <div className='text-center'>
                       <div className='mb-1 flex items-center gap-2'>
                         <ClockIcon className='h-4 w-4' />

@@ -217,7 +217,7 @@ const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringD
           </div>
         </div>
 
-        <div className='max-h-96 overflow-y-auto rounded-md border'>
+        <div className='max-h-90 overflow-y-auto rounded-md border'>
           <Table>
             <TableHeader className='sticky top-0 bg-background'>
               <TableRow>
@@ -339,6 +339,10 @@ const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringD
         }
       }
     });
+
+    return () => {
+      channel.unsubscribe();
+    };
   }, [event.id, reviewerData.reviewerId]);
 
   return (

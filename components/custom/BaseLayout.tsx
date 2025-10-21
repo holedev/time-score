@@ -17,7 +17,7 @@ type BaseLayoutType = { children: ReactNode };
 export function BaseLayout({ children }: BaseLayoutType) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={cn(roboto.className, "flex h-screen w-screen flex-col")}>
+      <body className={cn(roboto.className, "flex h-screen w-full flex-col")}>
         <ThemeProvider attribute='class' defaultTheme='system' disableTransitionOnChange enableSystem>
           <TooltipProvider>{children}</TooltipProvider>
           <Toaster />

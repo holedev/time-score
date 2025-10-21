@@ -12,7 +12,8 @@ export default function Page() {
       <div className='rounded-lg border bg-card p-6 text-card-foreground shadow-sm'>
         <h3 className='mb-2 font-semibold text-xl'>Chào mừng đến với Hệ thống Quản lý Thời gian Thuyết trình</h3>
         <p className='text-muted-foreground'>
-          Hệ thống quản lý và đánh giá thời gian thuyết trình dành cho Khoa Công nghệ Thông tin - Đại học Mở TP.HCM
+          Hệ thống quản lý và đánh giá thời gian thuyết trình dành cho Khoa Công nghệ Thông tin - Trường Đại học Mở
+          TP.HCM
         </p>
       </div>
 

@@ -209,12 +209,15 @@ const PresentationHeader = ({ currentTeam, eventDuration, eventId }: Presentatio
                       <h3 className='font-bold text-lg'>{currentTeam.title}</h3>
                       <h5 className='text-muted-foreground text-sm'>{currentTeam.description}</h5>
                     </div>
-                    <div className='mt-2 flex items-center gap-2 text-sm'>
+                    <div className='mt-2 flex items-start gap-2 text-sm'>
                       <UsersIcon className='h-4 w-4' />
-                      <span>
-                        {parseMembers(currentTeam.members).slice(0, 2).join(", ")}
-                        {currentTeam.members.length > 2 && ` +${currentTeam.members.length - 2}`}
-                      </span>
+                      <div>
+                        {parseMembers(currentTeam.members).map((member, idx) => (
+                          <div className='text-sm' key={`member-${currentTeam.id}-${idx}`}>
+                            {member}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                   <Separator className='my-4' />

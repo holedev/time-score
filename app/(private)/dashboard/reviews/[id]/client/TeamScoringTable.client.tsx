@@ -6,7 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
 import { CompleteEvent } from "@/configs/prisma/zod";
 import { useHandleError } from "@/hooks/use-handle-error";
 import { getReviewerScoresForTeam, ScoreEntry, saveReviewerScores } from "../actions";
@@ -203,7 +205,7 @@ const TeamScoringTable = ({ event, currentTeam }: TeamScoringTableProps) => {
           </div>
         ) : (
           <div className='space-y-4'>
-            <div className='max-h-96 overflow-y-auto rounded-md border'>
+            <ScrollArea className='max-h-[90vh] overflow-y-auto rounded-md border'>
               <Table>
                 <TableHeader className='sticky top-0 bg-background'>
                   <TableRow>
@@ -241,13 +243,14 @@ const TeamScoringTable = ({ event, currentTeam }: TeamScoringTableProps) => {
                           />
                         </TableCell>
                         <TableCell className='py-3 align-top'>
-                          <textarea
+                          <Textarea
                             className='min-h-[40px] w-full resize-none rounded-md border border-input bg-background px-2 py-1 text-xs ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50'
                             disabled={!canEdit}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                               handleCommentChange(criterion.id, e.target.value)
                             }
                             placeholder='Nhận xét...'
+                            rows={2}
                             value={scoreEntry?.comment || ""}
                           />
                         </TableCell>
@@ -256,7 +259,7 @@ const TeamScoringTable = ({ event, currentTeam }: TeamScoringTableProps) => {
                   })}
                 </TableBody>
               </Table>
-            </div>
+            </ScrollArea>
 
             {/* Total Score */}
             <div className='rounded-lg border bg-muted/50 p-3'>
