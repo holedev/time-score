@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
+import { _APP_NAME_ABBR } from "@/constants";
 import { HomepageClient } from "./Homepage.client";
 
-export function generateMetadata(): Metadata {
-  return {
-    title: "Homepage"
-  };
-}
+export const metadata: Metadata = {
+  title: `Trang chủ | ${_APP_NAME_ABBR}`
+};
 
 export default function Page() {
   return (

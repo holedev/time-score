@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { Suspense } from "react";
 import { LoadingComponent } from "@/components/custom/Loading";
 import { UserWithRole } from "@/types/global";
@@ -6,6 +7,10 @@ import { Profile } from "./dynamic";
 import { FormClient } from "./form.client";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Hồ sơ"
+};
 
 export default async function Page() {
   const { data, error } = await getProfile();

@@ -1,8 +1,13 @@
+import { Metadata } from "next";
 import { Suspense } from "react";
 import { LoadingComponent } from "@/components/custom/Loading";
 import { ReviewerTableDynamic } from "./dynamic";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Giám khảo"
+};
 
 export default function ReviewsPage() {
   return (

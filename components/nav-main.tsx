@@ -31,7 +31,6 @@ export function NavMain({
 
   const [role, setRole] = useState<UserRole>("anonymous");
 
-  // TODO: improve call from client (save to localstorage)
   useEffect(() => {
     const fetchUserRole = () => {
       setRole(

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { LoadingComponent } from "@/components/custom/Loading";
@@ -12,6 +13,10 @@ import {
 import { TableDynamic } from "./dynamic";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Người dùng"
+};
 
 export default function Page() {
   return (

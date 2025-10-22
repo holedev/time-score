@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { _APP_NAME_ABBR } from "@/constants";
 import { ModeToggle } from "./ModeToggle.client";
 import { UserProfile } from "./UserProfile.client";
 
@@ -7,7 +8,7 @@ const Header = () => (
     <div className='container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-4 md:flex-row'>
       <div className='flex items-center font-bold text-xl uppercase'>
         <Link href='/' prefetch={true}>
-          MPC Time Score
+          {_APP_NAME_ABBR}
         </Link>
       </div>
       <div className='flex items-center gap-2'>

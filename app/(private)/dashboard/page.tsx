@@ -1,5 +1,11 @@
 import { BarChart3, Calendar, Clock, FileText, Users } from "lucide-react";
+import { Metadata } from "next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { _APP_NAME_FULL } from "@/constants";
+
+export const metadata: Metadata = {
+  title: "Trang quản trị"
+};
 
 export default function Page() {
   return (
@@ -8,16 +14,14 @@ export default function Page() {
         <h2 className='font-bold text-3xl tracking-tight'>Bảng điều khiển</h2>
       </div>
 
-      {/* Welcome Section */}
       <div className='rounded-lg border bg-card p-6 text-card-foreground shadow-sm'>
-        <h3 className='mb-2 font-semibold text-xl'>Chào mừng đến với Hệ thống Quản lý Thời gian Thuyết trình</h3>
+        <h3 className='mb-2 font-semibold text-xl'>Chào mừng đến với {_APP_NAME_FULL}</h3>
         <p className='text-muted-foreground'>
-          Hệ thống quản lý và đánh giá thời gian thuyết trình dành cho Khoa Công nghệ Thông tin - Trường Đại học Mở
-          TP.HCM
+          Nền tảng hỗ trợ tổ chức, quản lý và chấm điểm thuyết trình một cách minh bạch và linh hoạt cho các sự kiện
+          thuộc Trường Đại học Mở TP. Hồ Chí Minh.
         </p>
       </div>
 
-      {/* Instructions Section */}
       <div className='grid gap-4 md:grid-cols-2'>
         <Card>
           <CardHeader>

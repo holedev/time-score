@@ -3,13 +3,14 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { BaseLayout } from "@/components/custom/BaseLayout";
 import { PageLayout } from "@/components/custom/PageLayout";
+import { _APP_NAME_ABBR, _APP_NAME_FULL } from "@/constants";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | MPC Time Score",
-    default: "MPC Time Score"
+    template: `%s | ${_APP_NAME_ABBR}`,
+    default: _APP_NAME_ABBR
   },
-  description: "MPC Time Score"
+  description: _APP_NAME_FULL
 };
 
 type Props = {

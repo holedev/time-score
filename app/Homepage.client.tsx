@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { _CLIENT_KEY_USER_ROLE } from "@/constants";
+import { _APP_NAME_FULL, _CLIENT_KEY_USER_ROLE } from "@/constants";
 import { UserRole } from "@/types/global";
 
 const HomepageClient = () => {
-  const [user, setUser] = useState();
   const [role, setRole] = useState<UserRole>("anonymous");
   const [shouldRender, setShouldRender] = useState<boolean>(false);
 
-  // TODO: improve call from client (save to localstorage)
   useEffect(() => {
     const fetchUserRole = () => {
       const roleClient = (localStorage.getItem(_CLIENT_KEY_USER_ROLE) as UserRole) || "anonymous";
@@ -25,13 +23,12 @@ const HomepageClient = () => {
       <section className='relative px-6 py-20 text-center'>
         <div className='mx-auto max-w-4xl'>
           <h1 className='mb-6 font-bold text-4xl text-gray-900 tracking-tight sm:text-6xl dark:text-white'>
-            Time-Score
-            <span className='block text-blue-600 dark:text-blue-400'>Management System</span>
+            <span className='block text-blue-600 dark:text-blue-400'>{_APP_NAME_FULL}</span>
           </h1>
 
           <p className='mx-auto mb-10 max-w-2xl text-gray-600 text-lg dark:text-gray-300'>
-            Nền tảng quản lý thời gian thuyết trình dành cho các sự kiện của khoa Công nghệ thông tin trường Đại học Mở
-            TP. HCM
+            Nền tảng hỗ trợ tổ chức, quản lý và chấm điểm thuyết trình một cách minh bạch và linh hoạt cho các sự kiện
+            thuộc Trường Đại học Mở TP. Hồ Chí Minh.
           </p>
 
           {shouldRender && role === "anonymous" && (

@@ -18,3 +18,6 @@ export const PresentationStatusMap: PresentationStatusMapType = {
   IN_PROGRESS: "Đang diễn ra",
   DONE: "Đã kết thúc"
 };
+
+export const _APP_NAME_ABBR = "OUOJ";
+export const _APP_NAME_FULL = "Open University Online Judge";
