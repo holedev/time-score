@@ -149,7 +149,7 @@ const CurrentTeamDisplay = ({ currentTeam, eventDuration, presentationStatus }: 
                   alt={`${currentTeam.title} team image`}
                   className='object-cover'
                   fill
-                  src={currentTeam.image || "/placeholder-team.jpg"}
+                  src={currentTeam.image || "/placeholder-team.png"}
                 />
               </div>
 

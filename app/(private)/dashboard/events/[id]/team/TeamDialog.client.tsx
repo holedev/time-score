@@ -38,6 +38,7 @@ function TeamDialog({ team, eventId, onSuccess, children, existingTeams }: TeamD
     title: team?.title || "",
     description: team?.description || "",
     image: team?.image || "",
+    url: team?.url || "",
     members:
       team?.members?.map((m: string) => {
         try {
@@ -99,6 +100,7 @@ function TeamDialog({ team, eventId, onSuccess, children, existingTeams }: TeamD
             title: formData.title,
             description: formData.description,
             image: formData.image,
+            url: formData.url,
             members: memberStrings
           };
 
@@ -181,6 +183,16 @@ function TeamDialog({ team, eventId, onSuccess, children, existingTeams }: TeamD
               onChange={(e) => setFormData((prev) => ({ ...prev, image: e.target.value }))}
               placeholder='Nhập URL hình ảnh'
               value={formData.image}
+            />
+          </div>
+
+          <div>
+            <Label htmlFor='team-url'>Github</Label>
+            <Input
+              id='team-url'
+              onChange={(e) => setFormData((prev) => ({ ...prev, url: e.target.value }))}
+              placeholder='Nhập URL Github'
+              value={formData.url}
             />
           </div>
 

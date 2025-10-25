@@ -101,7 +101,8 @@ function CriteriaTemplateDialog({ eventId, onSuccess, children }: CriteriaTempla
 function CriteriaRecordDialog({ criteriaTemplateId, record, onSuccess, children }: CriteriaRecordDialogProps) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState<CriteriaRecordCreateFormType>({
-    details: record?.details || "",
+    title: record?.title || "",
+    description: record?.description || "",
     maxScore: record?.maxScore || 0
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -109,7 +110,7 @@ function CriteriaRecordDialog({ criteriaTemplateId, record, onSuccess, children 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.details.trim() || formData.maxScore <= 0) {
+    if (!formData.title.trim() || formData.maxScore <= 0) {
       return;
     }
 
@@ -147,7 +148,7 @@ function CriteriaRecordDialog({ criteriaTemplateId, record, onSuccess, children 
         withSuccessNotify: true,
         onSuccess: ({ data }) => {
           setOpen(false);
-          setFormData({ details: "", maxScore: 0 });
+          setFormData({ title: "", description: "", maxScore: 0 });
           const updatedTemplate = data.payload as CompleteCriteriaTemplate;
           onSuccess({ template: updatedTemplate, action: "update" });
         }
@@ -166,15 +167,28 @@ function CriteriaRecordDialog({ criteriaTemplateId, record, onSuccess, children 
         </DialogHeader>
         <form className='space-y-4' onSubmit={handleSubmit}>
           <div>
-            <Label htmlFor='record-details'>Mô tả chi tiết</Label>
+            <Label htmlFor='record-title'>Tên tiêu chí con</Label>
             <Input
-              id='record-details'
+              id='record-title'
               onChange={(e) =>
-                setFormData((prev: CriteriaRecordCreateFormType) => ({ ...prev, details: e.target.value }))
+                setFormData((prev: CriteriaRecordCreateFormType) => ({ ...prev, title: e.target.value }))
+              }
+              placeholder='Nhập tên tiêu chí con'
+              required
+              value={formData.title}
+            />
+          </div>
+
+          <div>
+            <Label htmlFor='record-description'>Mô tả chi tiết</Label>
+            <Input
+              id='record-description'
+              onChange={(e) =>
+                setFormData((prev: CriteriaRecordCreateFormType) => ({ ...prev, description: e.target.value }))
               }
               placeholder='Nhập mô tả chi tiết cho tiêu chí này'
               required
-              value={formData.details}
+              value={formData.description}
             />
           </div>
 
@@ -182,15 +196,17 @@ function CriteriaRecordDialog({ criteriaTemplateId, record, onSuccess, children 
             <Label htmlFor='record-maxScore'>Điểm tối đa</Label>
             <Input
               id='record-maxScore'
+              max={10}
               min={1}
               onChange={(e) =>
                 setFormData((prev: CriteriaRecordCreateFormType) => ({
                   ...prev,
-                  maxScore: Number.parseInt(e.target.value, 10) || 0
+                  maxScore: Number.parseFloat(e.target.value) || 0
                 }))
               }
               placeholder='Nhập điểm tối đa'
               required
+              step={0.1}
               type='number'
               value={formData.maxScore || ""}
             />

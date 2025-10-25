@@ -405,6 +405,7 @@ model Team {
   order       Int
   status      TeamStatus @default(PENDING)
   eventId     Int
+  url         String?
   Event       Event      @relation(fields: [eventId], references: [id])
 
   @@schema("public")
@@ -424,13 +425,14 @@ model CriteriaTemplate {
 }
 
 model CriteriaRecord {
-  id         Int              @id @default(autoincrement())
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
-  criteriaId Int
-  details    String
-  maxScore   Int
-  criteria   CriteriaTemplate @relation(fields: [criteriaId], references: [id])
+  id          Int              @id @default(autoincrement())
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  criteriaId  Int
+  title       String
+  maxScore    Float
+  description String?
+  criteria    CriteriaTemplate @relation(fields: [criteriaId], references: [id])
 
   @@schema("public")
 }

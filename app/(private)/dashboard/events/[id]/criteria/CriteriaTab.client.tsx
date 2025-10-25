@@ -185,7 +185,8 @@ function CriteriaTabClient({ event }: CriteriaTabProps) {
                         <TableCell className='font-mono text-sm'>#{record.id}</TableCell>
                         <TableCell>
                           <div className='max-w-md'>
-                            <p className='text-sm'>{record.details || "Chưa có mô tả"}</p>
+                            <p className='text-sm'>{record.title || "Chưa có mô tả"}</p>
+                            <p className='mt-1 text-muted-foreground text-xs'>{record.description}</p>
                           </div>
                         </TableCell>
                         <TableCell className='text-center'>

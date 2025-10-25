@@ -96,7 +96,7 @@ const TeamScoringTable = ({ event, currentTeam }: TeamScoringTableProps) => {
           return { ...entry, score: 0 };
         }
 
-        let num = Number(value);
+        let num = Number(value) || 0;
         if (Number.isNaN(num)) {
           return entry;
         }
@@ -220,7 +220,12 @@ const TeamScoringTable = ({ event, currentTeam }: TeamScoringTableProps) => {
                     const scoreEntry = scoreEntries.find((entry) => entry.criteriaRecordId === criterion.id);
                     return (
                       <TableRow key={criterion.id}>
-                        <TableCell className='py-3 align-top font-medium text-sm'>{criterion.details}</TableCell>
+                        <TableCell className='py-3 align-top font-medium text-sm'>
+                          {criterion.title}
+                          {criterion.description && (
+                            <div className='mt-1 text-md text-muted-foreground'>{criterion.description}</div>
+                          )}
+                        </TableCell>
                         <TableCell className='py-3 text-center align-top'>
                           <span className='rounded bg-muted px-2 py-1 font-medium text-xs'>{criterion.maxScore}</span>
                         </TableCell>
@@ -239,7 +244,7 @@ const TeamScoringTable = ({ event, currentTeam }: TeamScoringTableProps) => {
                             placeholder='0'
                             step={0.1}
                             type='number'
-                            value={scoreEntry?.score || ""}
+                            value={scoreEntry?.score || "0"}
                           />
                         </TableCell>
                         <TableCell className='py-3 align-top'>

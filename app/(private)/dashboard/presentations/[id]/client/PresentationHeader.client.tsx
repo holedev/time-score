@@ -2,11 +2,13 @@
 
 import { ClockIcon, PauseIcon, PlayIcon, SquareIcon, UsersIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { CompleteTeam } from "@/configs/prisma/zod";
 import { createPresentEventChannel, sendTimerAction } from "@/utils/realtime";
 
 // Constants
@@ -15,18 +17,8 @@ const SECONDS_PER_HOUR = 3600;
 const SECONDS_PER_MINUTE = 60;
 const WARNING_TIME_SECONDS = 300; // 5 minutes
 
-type Team = {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  members: string[];
-  order: number;
-  status: "PENDING" | "INPROGRESS" | "DONE";
-};
-
 type PresentationHeaderProps = {
-  currentTeam: Team | null;
+  currentTeam: CompleteTeam | null;
   eventDuration: number;
   presentationStatus: "PENDING" | "IN_PROGRESS" | "DONE";
   eventId: number;
@@ -196,7 +188,7 @@ const PresentationHeader = ({ currentTeam, eventDuration, eventId }: Presentatio
                 <Image
                   alt={`${currentTeam.title} team image`}
                   height={250}
-                  src={currentTeam.image || "/placeholder-team.jpg"}
+                  src={currentTeam.image || "/placeholder-team.png"}
                   width={500}
                 />
 
@@ -206,7 +198,16 @@ const PresentationHeader = ({ currentTeam, eventDuration, eventId }: Presentatio
                       <Badge className='bg-green-100 text-green-800' variant='secondary'>
                         Đang trình bày
                       </Badge>
-                      <h3 className='font-bold text-lg'>{currentTeam.title}</h3>
+                      <h3 className='font-bold text-lg'>
+                        {currentTeam.title}
+                        {currentTeam.url && (
+                          <Link href={currentTeam.url} target='_blank'>
+                            <Button className='ml-4' size='sm' variant='outline'>
+                              Source (Github)
+                            </Button>
+                          </Link>
+                        )}
+                      </h3>
                       <h5 className='text-muted-foreground text-sm'>{currentTeam.description}</h5>
                     </div>
                     <div className='mt-2 flex items-start gap-2 text-sm'>

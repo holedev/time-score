@@ -20,7 +20,7 @@ type ReviewerDataTableProps = {
 };
 
 const ReviewerDataTable = ({ data }: ReviewerDataTableProps) => {
-  const [events, setEvents] = useState(data);
+  const [events, _] = useState(data);
 
   const getStatusColor = (status: string) => {
     switch (status) {

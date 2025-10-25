@@ -1,6 +1,7 @@
 "use client";
 
 import { StarIcon, UsersIcon } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,9 +23,10 @@ type Team = {
 type TeamListTableProps = {
   event: CompleteEvent;
   reviewerData: CompleteEventReviewer;
+  setEvent: Dispatch<SetStateAction<CompleteEvent>>;
 };
 
-const TeamListTable = ({ event, reviewerData }: TeamListTableProps) => {
+const TeamListTable = ({ event, reviewerData, setEvent }: TeamListTableProps) => {
   const teams = event.teams || [];
 
   const parseMembers = (members: string[]) => {
@@ -129,7 +131,7 @@ const TeamListTable = ({ event, reviewerData }: TeamListTableProps) => {
                   </TableCell>
                   <TableCell>{getStatusBadge(team.status)}</TableCell>
                   <TableCell>
-                    <TeamScoringDialog event={event} reviewerData={reviewerData} team={team}>
+                    <TeamScoringDialog event={event} reviewerData={reviewerData} setEvent={setEvent} team={team}>
                       <Button size='sm' variant='outline'>
                         <StarIcon className='mr-1 h-3 w-3' />
                         {hasTeamBeenScored(team.id) ? "Xem lại điểm" : "Chấm điểm"}

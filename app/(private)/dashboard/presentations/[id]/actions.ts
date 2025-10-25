@@ -124,10 +124,66 @@ const getEventForPresentation = async ({ eventId }: { eventId: number }) =>
     }
   });
 
+const getPresentationFinalScores = async ({ eventId }: { eventId: number }) =>
+  handleAuthorizeRoleAdmin({
+    cb: async () => {
+      const event = await prisma.event.findUnique({
+        where: { id: eventId, isDeleted: false },
+        include: {
+          criteriaTemplateId: {
+            include: {
+              criteriaRecords: true
+            }
+          }
+        }
+      });
+
+      if (!event) {
+        throw new Error("Event not found");
+      }
+
+      const [allReviewers, teams] = await Promise.all([
+        prisma.eventReviewer.findMany({
+          where: {
+            eventId,
+            isDeleted: false
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                email: true,
+                raw_user_meta_data: true
+              }
+            }
+          },
+          orderBy: [{ isLeader: "desc" }, { user: { email: "asc" } }]
+        }),
+        prisma.team.findMany({
+          where: {
+            eventId,
+            isDeleted: false
+          },
+          orderBy: { order: "asc" }
+        })
+      ]);
+
+      const criteriaRecords = event.criteriaTemplateId?.criteriaRecords || [];
+      const maxPossibleScore = criteriaRecords.reduce((total, criterion) => total + criterion.maxScore, 0);
+
+      return {
+        allReviewers,
+        teams,
+        maxPossibleScore
+      };
+    }
+  });
+
 export {
   updatePresentationStatus,
   updateTeamStatus,
   updateReviewerStatus,
   getEventForPresentation,
-  startTeamPresentation
+  startTeamPresentation,
+  getPresentationFinalScores
 };

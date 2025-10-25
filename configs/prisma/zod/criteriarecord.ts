@@ -6,8 +6,9 @@ export const CriteriaRecordModel = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
   criteriaId: z.number().int(),
-  details: z.string(),
-  maxScore: z.number().int(),
+  title: z.string(),
+  maxScore: z.number(),
+  description: z.string().nullish(),
 })
 
 export interface CompleteCriteriaRecord extends z.infer<typeof CriteriaRecordModel> {

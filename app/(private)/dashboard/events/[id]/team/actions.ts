@@ -9,6 +9,7 @@ export type TeamCreateFormType = {
   title: string;
   description: string;
   image: string;
+  url: string;
   members: string[];
   order: number;
 };

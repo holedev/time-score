@@ -14,6 +14,7 @@ export const TeamModel = z.object({
   order: z.number().int(),
   status: z.nativeEnum(TeamStatus),
   eventId: z.number().int(),
+  url: z.string().nullish(),
 })
 
 export interface CompleteTeam extends z.infer<typeof TeamModel> {

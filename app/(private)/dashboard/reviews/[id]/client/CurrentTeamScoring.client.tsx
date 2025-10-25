@@ -139,7 +139,7 @@ const CurrentTeamScoring = ({ event, team }: CurrentTeamScoringProps) => {
           {criteria.map((criterion) => (
             <div className='space-y-2' key={criterion.id}>
               <Label className='font-medium text-sm' htmlFor={`score-${criterion.id}`}>
-                {criterion.details}
+                {criterion.title}
                 <span className='ml-1 text-muted-foreground'>(Tối đa: {criterion.maxScore} điểm)</span>
               </Label>
               <Input

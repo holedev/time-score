@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useHandleError } from "@/hooks/use-handle-error";
 import { createPresentEventChannel, sendAddTeamCurr, sendRemoveTeamCurr } from "@/utils/realtime";
 import { startTeamPresentation, updateTeamStatus } from "../actions";
+import { EventResultDialog } from "./EventResultDialog.client";
 
 type Team = {
   id: number;
@@ -153,13 +154,20 @@ const TeamManagement = ({ eventId, teams, presentationStatus }: TeamManagementPr
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className='flex items-center gap-2'>
-          <UsersIcon className='h-5 w-5' />
-          Danh sách đội thi ({teamList.length} đội) - Đang chờ (
-          {teamList.filter((team) => team.status === "PENDING").length} đội) - Đã hoàn thành (
-          {teamList.filter((team) => team.status === "DONE").length} đội)
-        </CardTitle>
+      <CardHeader className='space-y-4'>
+        <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
+          <CardTitle className='flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2'>
+            <span className='flex items-center gap-2'>
+              <UsersIcon className='h-5 w-5' />
+              Danh sách đội thi ({teamList.length} đội)
+            </span>
+            <span className='font-normal text-muted-foreground text-sm'>
+              Đang chờ ({teamList.filter((team) => team.status === "PENDING").length} đội) - Đã hoàn thành (
+              {teamList.filter((team) => team.status === "DONE").length} đội)
+            </span>
+            <EventResultDialog eventId={eventId} />
+          </CardTitle>
+        </div>
       </CardHeader>
       <CardContent>
         {teamList.length === 0 ? (

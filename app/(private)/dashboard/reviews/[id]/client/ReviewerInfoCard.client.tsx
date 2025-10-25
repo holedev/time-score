@@ -1,7 +1,7 @@
 "use client";
 
 import { ShieldCheckIcon, StarIcon, UsersIcon } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import { getAllReviewersScores, ScoreEntry, toggleScoreEditPermission } from "..
 type ReviewerInfoCardProps = {
   event: CompleteEvent;
   reviewerData: CompleteEventReviewer;
+  setEvent: Dispatch<SetStateAction<CompleteEvent>>;
 };
 
 type ReviewerWithScores = {
@@ -127,7 +128,7 @@ const FinalScoreTable = ({
               <TableHead className='w-[80px] text-center'>Hạng</TableHead>
               <TableHead className='w-[200px]'>Đội thi</TableHead>
               {finalScoresData.allReviewers.map((reviewer) => (
-                <TableHead className='w-[120px] text-center' key={reviewer.id}>
+                <TableHead className='w-[120px] py-2 text-center' key={reviewer.id}>
                   <div className='flex flex-col items-center gap-1'>
                     <span className='text-xs'>{getReviewerDisplayName(reviewer)}</span>
                     {reviewer.isLeader && (
@@ -218,7 +219,7 @@ const FinalScoreTable = ({
   );
 };
 
-const ReviewerInfoCard = ({ event, reviewerData }: ReviewerInfoCardProps) => {
+const ReviewerInfoCard = ({ event, reviewerData, setEvent }: ReviewerInfoCardProps) => {
   const { handleErrorClient } = useHandleError();
   const [finalScoresData, setFinalScoresData] = useState<AllReviewersScoresData | null>(null);
   const [isLoadingFinalScores, setIsLoadingFinalScores] = useState(false);
@@ -288,6 +289,10 @@ const ReviewerInfoCard = ({ event, reviewerData }: ReviewerInfoCardProps) => {
       withSuccessNotify: true,
       onSuccess: () => {
         setCurrentCanEditScore(newPermission);
+        setEvent((prev) => ({
+          ...prev,
+          canEditScore: newPermission
+        }));
         const channel = createReviewerEventChannel({ eventId: event.id });
         channel.subscribe();
 

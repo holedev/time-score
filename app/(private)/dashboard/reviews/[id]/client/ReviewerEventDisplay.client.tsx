@@ -2,9 +2,11 @@
 
 import { CircleIcon, ClockIcon, StarIcon, UsersIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CompleteEvent } from "@/configs/prisma/zod";
@@ -188,20 +190,23 @@ const ReviewerEventDisplay = ({ event, reviewerData }: ReviewerEventDisplayProps
         <Card className='w-full border-1'>
           <CardHeader>
             <CardTitle className='flex items-center gap-2'>
-              <CircleIcon className='h-6 w-6' color='red' /> LIVE
+              <span className={`flex items-center ${isTimerRunning ? "text-red-600" : "text-muted-foreground"}`}>
+                <CircleIcon className={`h-6 w-6 ${isTimerRunning ? "animate-pulse" : ""}`} />
+              </span>
+              LIVE
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className='flex justify-center'>
               <div className='flex'>
-                <div className='flex flex-col items-start md:gap-3 lg:flex-row lg:gap-6'>
+                <div className='flex flex-col items-start md:gap-3 lg:flex-row lg:gap-3'>
                   <div className='flex flex-col gap-4 md:flex-row lg:flex-1'>
                     <div className='relative aspect-[16/9] w-[80vw] flex-shrink-0 overflow-hidden rounded-lg md:w-[500px]'>
                       <Image
                         alt={`${currentTeam.title} team image`}
                         className='object-cover'
                         fill
-                        src={currentTeam.image || "/placeholder-team.jpg"}
+                        src={currentTeam.image || "/placeholder-team.png"}
                       />
                     </div>
 
@@ -211,6 +216,15 @@ const ReviewerEventDisplay = ({ event, reviewerData }: ReviewerEventDisplayProps
                         <Badge variant='secondary'>Đang trình bày</Badge>
                       </div>
                       <p className='mb-3 text-sm'>{currentTeam.description}</p>
+                      {currentTeam.url && (
+                        <span>
+                          <Link href={currentTeam.url} target='_blank'>
+                            <Button size='sm' variant='outline'>
+                              Source (Github)
+                            </Button>
+                          </Link>
+                        </span>
+                      )}
 
                       <div className='mt-4 mb-2 flex items-center justify-center gap-2 md:justify-start'>
                         <UsersIcon className='h-4 w-4' />
@@ -282,9 +296,9 @@ const ReviewerEventDisplay = ({ event, reviewerData }: ReviewerEventDisplayProps
 
       <TeamScoringTable currentTeam={currentTeam} event={currentEvent} />
 
-      <ReviewerInfoCard event={currentEvent} reviewerData={reviewerData} />
+      <ReviewerInfoCard event={currentEvent} reviewerData={reviewerData} setEvent={setCurrentEvent} />
 
-      <TeamListTable event={currentEvent} reviewerData={reviewerData} />
+      <TeamListTable event={currentEvent} reviewerData={reviewerData} setEvent={setCurrentEvent} />
     </div>
   );
 };

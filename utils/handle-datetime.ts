@@ -1,5 +1,5 @@
 const handleDatetime = (datetime: Date) =>
-  datetime.toLocaleString("en-US", {
+  datetime.toLocaleString("vi-VN", {
     timeZone: "Asia/Ho_Chi_Minh",
     year: "numeric",
     month: "2-digit",

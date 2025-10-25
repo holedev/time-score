@@ -2,14 +2,15 @@
 
 import { SaveIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { LoadingComponent } from "@/components/custom/Loading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { CompleteEvent } from "@/configs/prisma/zod";
+import { CompleteEvent, CompleteTeam } from "@/configs/prisma/zod";
 import { CompleteEventReviewer } from "@/configs/prisma/zod/eventreviewer";
 import { useHandleError } from "@/hooks/use-handle-error";
 import { createReviewerEventChannel, receiveScoreEditToggle } from "@/utils/realtime";
@@ -18,32 +19,22 @@ import { getReviewerScoresForTeam, ScoreEntry, saveReviewerScores } from "../act
 // Constants
 const PROGRESS_BAR_FULL_PERCENTAGE = 100;
 
-type Team = {
-  id: number;
-  title: string;
-  image: string;
-  description: string;
-  members: string[];
-  status: string;
-};
-
 type TeamScoringDialogProps = {
   event: CompleteEvent;
-  team: Team;
+  setEvent: Dispatch<SetStateAction<CompleteEvent>>;
+  team: CompleteTeam;
   reviewerData: CompleteEventReviewer;
   children: React.ReactNode;
 };
 
-const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringDialogProps) => {
+const TeamScoringDialog = ({ event, team, reviewerData, children, setEvent }: TeamScoringDialogProps) => {
   const { handleErrorClient, toast } = useHandleError();
   const [scoreEntries, setScoreEntries] = useState<ScoreEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [currentCanEditScore, setCurrentCanEditScore] = useState(event.canEditScore);
 
   const criteria = event.criteriaTemplateId?.criteriaRecords || [];
-  const canEdit = currentCanEditScore !== false;
 
   const initializeScores = () => {
     const initialEntries = criteria.map((criterion) => ({
@@ -185,7 +176,7 @@ const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringD
 
     return (
       <div className='space-y-4'>
-        {!canEdit && (
+        {!event.canEditScore && (
           <div className='rounded-lg border border-orange-200 bg-orange-50 p-3'>
             <div className='flex items-center gap-2 text-orange-800 text-sm'>
               <StarIcon className='h-4 w-4' />
@@ -203,16 +194,27 @@ const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringD
               alt={`${team.title} team image`}
               className='object-cover'
               fill
-              src={team.image || "/placeholder-team.jpg"}
+              src={team.image || "/placeholder-team.png"}
             />
           </div>
-          <div>
-            <h4 className='font-medium text-sm'>{team.title}</h4>
-            <p className='mt-1 text-muted-foreground text-xs'>{team.description}</p>
-            <div className='mt-2'>
-              {parseMembers(team.members).map((m) => (
-                <p key={m}>{m}</p>
-              ))}
+          <div className='flex w-full justify-between gap-4'>
+            <div>
+              <h4 className='font-medium text-sm'>{team.title}</h4>
+              <p className='mt-1 text-muted-foreground text-xs'>{team.description}</p>
+              <div className='mt-2'>
+                {parseMembers(team.members).map((m) => (
+                  <p key={m}>{m}</p>
+                ))}
+              </div>
+            </div>
+            <div>
+              {team.url && (
+                <Link className='mt-2 text-sm underline' href={team.url} rel='noopener noreferrer' target='_blank'>
+                  <Button size='sm' variant='outline'>
+                    Source (Github)
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -232,14 +234,19 @@ const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringD
                 const scoreEntry = scoreEntries.find((entry) => entry.criteriaRecordId === criterion.id);
                 return (
                   <TableRow key={criterion.id}>
-                    <TableCell className='py-3 align-top font-medium text-sm'>{criterion.details}</TableCell>
+                    <TableCell className='py-3 align-top font-medium text-sm'>
+                      {criterion.title}
+                      {criterion.description && (
+                        <div className='mt-1 text-md text-muted-foreground'>{criterion.description}</div>
+                      )}
+                    </TableCell>
                     <TableCell className='py-3 text-center align-top'>
                       <span className='rounded bg-muted px-2 py-1 font-medium text-xs'>{criterion.maxScore}</span>
                     </TableCell>
                     <TableCell className='py-3 align-top'>
                       <Input
                         className='h-8 w-20'
-                        disabled={!canEdit}
+                        disabled={!event.canEditScore}
                         max={criterion.maxScore}
                         min={0}
                         onChange={(e) => handleScoreChange(criterion.id, e.target.value, criterion.maxScore)}
@@ -251,13 +258,13 @@ const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringD
                         placeholder='0'
                         step={0.1}
                         type='number'
-                        value={scoreEntry?.score || ""}
+                        value={scoreEntry?.score || "0"}
                       />
                     </TableCell>
                     <TableCell className='py-3 align-top'>
                       <textarea
                         className='min-h-[40px] w-full resize-none rounded-md border border-input bg-background px-2 py-1 text-xs ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50'
-                        disabled={!canEdit}
+                        disabled={!event.canEditScore}
                         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                           handleCommentChange(criterion.id, e.target.value)
                         }
@@ -290,13 +297,13 @@ const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringD
           </div>
         </div>
 
-        <Button className='w-full' disabled={isSaving || !canEdit} onClick={handleSave} size='sm'>
+        <Button className='w-full' disabled={isSaving || !event.canEditScore} onClick={handleSave} size='sm'>
           <SaveIcon className='mr-2 h-4 w-4' />
           {(() => {
             if (isSaving) {
               return "Đang lưu...";
             }
-            if (canEdit) {
+            if (event) {
               return "Lưu điểm";
             }
             return "Không thể lưu (đã khóa)";
@@ -304,7 +311,7 @@ const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringD
         </Button>
 
         <div className='text-muted-foreground text-xs'>
-          {canEdit ? (
+          {event ? (
             <>
               <p>• Nhập điểm cho từng tiêu chí đánh giá</p>
               <p>• Điểm sẽ được lưu và dialog sẽ đóng khi bạn nhấn "Lưu điểm"</p>
@@ -329,7 +336,7 @@ const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringD
       channel,
       cb: ({ payload }) => {
         if (payload.toggledBy !== reviewerData.reviewerId) {
-          setCurrentCanEditScore(payload.canEditScore);
+          setEvent((prev) => ({ ...prev, canEditScore: payload.canEditScore }));
           toast({
             title: "Cập nhật quyền chấm điểm",
             description: payload.canEditScore
@@ -348,12 +355,12 @@ const TeamScoringDialog = ({ event, team, reviewerData, children }: TeamScoringD
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className='max-h-[85vh] max-w-4xl overflow-hidden'>
+      <DialogContent className='max-h-[90vh] max-w-4xl overflow-hidden'>
         <DialogHeader>
           <DialogTitle className='flex items-center gap-2'>
             <StarIcon className='h-5 w-5' />
             Chấm điểm đội thi
-            {!canEdit && (
+            {!event.canEditScore && (
               <Badge className='text-xs' variant='destructive'>
                 Đã khóa
               </Badge>

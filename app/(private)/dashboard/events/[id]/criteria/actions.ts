@@ -10,7 +10,8 @@ export type CriteriaTemplateCreateFormType = {
 };
 
 export type CriteriaRecordCreateFormType = {
-  details: string;
+  title: string;
+  description: string;
   maxScore: number;
 };
 
