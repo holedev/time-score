@@ -185,12 +185,14 @@ const PresentationHeader = ({ currentTeam, eventDuration, eventId }: Presentatio
           <div className='flex flex-1 items-center justify-center gap-4'>
             {currentTeam ? (
               <div className='flex justify-center gap-8'>
-                <Image
-                  alt={`${currentTeam.title} team image`}
-                  height={250}
-                  src={currentTeam.image || "/placeholder-team.png"}
-                  width={500}
-                />
+                <div className='relative aspect-[16/9] w-[500px] flex-shrink-0 overflow-hidden rounded-lg'>
+                  <Image
+                    alt={`${currentTeam.title} team image`}
+                    height={250}
+                    src={currentTeam.image || "/placeholder-team.png"}
+                    width={500}
+                  />
+                </div>
 
                 <div>
                   <div>
